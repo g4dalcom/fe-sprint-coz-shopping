@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./redux/product";
-import Image from "next/image";
 import styled from "styled-components";
 import Modal from "./component/Modal";
+import ProductList from "./component/ProductList";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -33,109 +33,26 @@ export default function Home() {
         product={product}
       />
       <MainContainer>
-        <ListContainer>
-          <ListTitle>상품 리스트</ListTitle>
-          <ProductList>
-            {products.map((e) => (
-              <CozProduct
-                key={e.id}
-                onClick={() => {
-                  setProduct(e);
-                  setOpenModal(!openModal);
-                }}
-              >
-                {(() => {
-                  switch (e.type) {
-                    case "Category":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="category image"
-                          />
-                          <CozBookmark>🤍</CozBookmark>
-                          <CozTitle>#{e.title}</CozTitle>
-                        </>
-                      );
-
-                    case "Brand":
-                      return (
-                        <>
-                          <Image
-                            src={e.brand_image_url}
-                            width={260}
-                            height={200}
-                            alt="brand image"
-                            className="product_image"
-                          />
-                          <CozBookmark>🤍</CozBookmark>
-                          <CozTitle>{e.brand_name}</CozTitle>
-                          <CozFollower>관심고객수</CozFollower>
-                          <Follower>
-                            {[e.follower]
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                          </Follower>
-                        </>
-                      );
-                    case "Product":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="product image"
-                            className="product_image"
-                          />
-                          <CozBookmark>🤍</CozBookmark>
-                          <CozTitle>{e.title}</CozTitle>
-                          <CozDiscount>{e.discountPercentage}%</CozDiscount>
-                          <CozPrice>
-                            {[e.price]
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                            원
-                          </CozPrice>
-                        </>
-                      );
-                    case "Exhibition":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="exhibition image"
-                            className="product_image"
-                          />
-                          <CozBookmark>🤍</CozBookmark>
-                          <CozTitle>{e.title}</CozTitle>
-                          <CozSubTitle>{e.sub_title}</CozSubTitle>
-                        </>
-                      );
-                  }
-                })()}
-              </CozProduct>
-            ))}
-          </ProductList>
-        </ListContainer>
+        <ProductList
+          products={products}
+          setProduct={setProduct}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
         <ListContainer>
           <ListTitle>북마크 리스트</ListTitle>
-          <ProductList>
+          <ProductLists>
             {products.map((e) => (
               <CozProduct key={e.id}>{e.type}</CozProduct>
             ))}
-          </ProductList>
+          </ProductLists>
         </ListContainer>
       </MainContainer>
     </>
   );
 }
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -143,9 +60,14 @@ const MainContainer = styled.div`
   width: 70vw;
   height: 70vh;
   margin-top: 20px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const ListContainer = styled.div`
+export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -155,14 +77,14 @@ const ListContainer = styled.div`
   gap: 12px;
 `;
 
-const ListTitle = styled.div`
+export const ListTitle = styled.div`
   font-size: 28px;
   font-weight: 600;
   text-align: center;
   height: 10%;
 `;
 
-const ProductList = styled.div`
+export const ProductLists = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -172,7 +94,7 @@ const ProductList = styled.div`
   flex-grow: 0;
 `;
 
-const CozProduct = styled.div`
+export const CozProduct = styled.div`
   width: 320px;
   height: 260px;
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
@@ -183,16 +105,26 @@ const CozProduct = styled.div`
     cursor: pointer;
     opacity: 0.8;
   }
+
+  & > img:not(:first-child) {
+    position: absolute;
+    right: 15px;
+    bottom: 70px;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
 `;
 
-const CozTitle = styled.div`
+export const CozTitle = styled.div`
   font-family: Dongle;
   font-size: 25px;
   font-weight: 800;
   line-height: 30px;
 `;
 
-const CozDiscount = styled.div`
+export const CozDiscount = styled.div`
   color: #452cdd;
   font-family: Dongle;
   font-size: 23px;
@@ -203,7 +135,7 @@ const CozDiscount = styled.div`
   line-height: 15px;
 `;
 
-const CozPrice = styled.div`
+export const CozPrice = styled.div`
   font-family: Dongle;
   font-size: 20px;
   font-weight: 550;
@@ -212,7 +144,7 @@ const CozPrice = styled.div`
   bottom: 7px;
 `;
 
-const CozFollower = styled.div`
+export const CozFollower = styled.div`
   font-family: Dongle;
   position: absolute;
   right: 0;
@@ -222,7 +154,7 @@ const CozFollower = styled.div`
   line-height: 15px;
 `;
 
-const Follower = styled.div`
+export const Follower = styled.div`
   font-family: Dongle;
   font-size: 20px;
   font-weight: 550;
@@ -231,18 +163,9 @@ const Follower = styled.div`
   bottom: 7px;
 `;
 
-const CozSubTitle = styled.div`
+export const CozSubTitle = styled.div`
   font-family: Dongle;
   font-size: 18px;
   font-weight: 500;
-`;
-
-const CozBookmark = styled.span`
-  position: absolute;
-  right: 15px;
-  bottom: 70px;
-
-  &:hover {
-    transform: scale(1.2);
-  }
+  line-height: 10px;
 `;

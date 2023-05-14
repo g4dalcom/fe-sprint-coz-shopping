@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import Image from "next/image";
+import vector from "../../public/vector.svg";
+import bookmarkOff from "../../public/bookmark-off.svg";
 
 export default function Modal({ openModal, openModalHandler, product }) {
   return (
@@ -6,6 +9,13 @@ export default function Modal({ openModal, openModalHandler, product }) {
       {openModal && (
         <ModalBackdrop onClick={openModalHandler}>
           <ModalContainer>
+            <Image
+              onClick={openModalHandler}
+              src={vector}
+              width={24}
+              height={24}
+              alt="close button"
+            />
             <ModalView>
               <ModalImage
                 src={
@@ -16,7 +26,12 @@ export default function Modal({ openModal, openModalHandler, product }) {
                 alt="product image"
               />
             </ModalView>
-            <ModalBookmark>🤍</ModalBookmark>
+            <Image
+              src={bookmarkOff}
+              width={24}
+              height={24}
+              alt="bookmark button"
+            />
             <ModalTitle>
               {product.type === "Brand" ? product.brand_name : product.title}
             </ModalTitle>
@@ -36,7 +51,7 @@ const ModalBackdrop = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   /* border-radius: 10px; */
-  z-index: 1;
+  z-index: 10;
 `;
 
 const ModalContainer = styled.div`
@@ -48,6 +63,29 @@ const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  & > img:not(:first-child) {
+    z-index: 10;
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    font-size: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & > img:first-child {
+    z-index: 10;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const ModalView = styled.div`
@@ -64,18 +102,6 @@ const ModalImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 12px;
-`;
-
-const ModalBookmark = styled.div`
-  z-index: 10;
-  position: absolute;
-  bottom: 15px;
-  left: 20px;
-  font-size: 20px;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const ModalTitle = styled.div`

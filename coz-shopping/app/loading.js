@@ -2,12 +2,13 @@
 
 import styled, { keyframes } from "styled-components";
 import Header from "./component/Header";
+import Footer from "./component/Footer.js";
 
 const Loading = () => {
   return (
     <>
       <Header />
-      <div>
+      <LoadingContainer>
         <PacmanLoading>
           <div></div>
           <div></div>
@@ -17,12 +18,18 @@ const Loading = () => {
           <div></div>
         </PacmanLoading>
         <div>Loading...</div>
-      </div>
+      </LoadingContainer>
+      <Footer />
     </>
   );
 };
 
 export default Loading;
+
+const LoadingContainer = styled.div`
+  width: 70vw;
+  height: 70vh;
+`;
 
 const PacmanTop = keyframes`
     0%,

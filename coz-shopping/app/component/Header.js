@@ -56,12 +56,15 @@ export default function Header() {
                   <div>OOO님, 안녕하세요!</div>
                 </List>
                 <List>
-                  <Link onClick={() => setOpenModal(false)} href="/">
+                  <Link
+                    onClick={() => setOpenModal(false)}
+                    href="/products/list"
+                  >
                     🎁상품리스트 페이지
                   </Link>
                 </List>
                 <List>
-                  <Link onClick={() => setOpenModal(false)} href="/">
+                  <Link onClick={() => setOpenModal(false)} href="/bookmark">
                     ⭐북마크 페이지
                   </Link>
                 </List>
@@ -80,9 +83,11 @@ const HeadContainer = styled.div`
   align-items: center;
   height: 5vh;
   position: sticky;
+  top: 0;
   margin: 20px auto;
   width: 70vw;
   z-index: 10;
+  background-color: white;
 `;
 
 const LogoContainer = styled.div`
