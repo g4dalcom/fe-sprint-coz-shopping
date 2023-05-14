@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "./redux/product";
 import Image from "next/image";
 import styled from "styled-components";
+import Modal from "./component/Modal";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const [product, setProduct] = useState({});
+
+  console.log("product = ", product);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -16,14 +21,29 @@ export default function Home() {
   const products = useSelector((state) => state.product.products);
   console.log(products);
 
+  const openModalHandler = () => {
+    setOpenModal(!openModal);
+  };
+
   return (
     <>
+      <Modal
+        openModal={openModal}
+        openModalHandler={openModalHandler}
+        product={product}
+      />
       <MainContainer>
         <ListContainer>
           <ListTitle>상품 리스트</ListTitle>
           <ProductList>
             {products.map((e) => (
-              <CozProduct key={e.id}>
+              <CozProduct
+                key={e.id}
+                onClick={() => {
+                  setProduct(e);
+                  setOpenModal(!openModal);
+                }}
+              >
                 {(() => {
                   switch (e.type) {
                     case "Category":
@@ -34,7 +54,6 @@ export default function Home() {
                             width={260}
                             height={200}
                             alt="category image"
-                            className="product_image"
                           />
                           <CozBookmark>🤍</CozBookmark>
                           <CozTitle>#{e.title}</CozTitle>
@@ -156,12 +175,13 @@ const ProductList = styled.div`
 const CozProduct = styled.div`
   width: 320px;
   height: 260px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border-radius: 12px;
   position: relative;
 
   &:hover {
     cursor: pointer;
+    opacity: 0.8;
   }
 `;
 
@@ -169,7 +189,7 @@ const CozTitle = styled.div`
   font-family: Dongle;
   font-size: 25px;
   font-weight: 800;
-  line-height: 19px;
+  line-height: 30px;
 `;
 
 const CozDiscount = styled.div`
@@ -199,6 +219,7 @@ const CozFollower = styled.div`
   bottom: 30px;
   font-size: 20px;
   font-weight: 600;
+  line-height: 15px;
 `;
 
 const Follower = styled.div`
