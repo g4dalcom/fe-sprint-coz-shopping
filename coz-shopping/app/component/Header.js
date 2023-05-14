@@ -80,7 +80,8 @@ const HeadContainer = styled.div`
   align-items: center;
   height: 5vh;
   position: sticky;
-  margin: 20px 40px auto;
+  margin: 20px auto;
+  width: 70vw;
 `;
 
 const LogoContainer = styled.div`
@@ -94,7 +95,7 @@ const LogoContainer = styled.div`
 `;
 
 const NavContainer = styled.div`
-  &:hover:not(:div) {
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -127,5 +128,8 @@ const List = styled.li`
 
   &:not(:last-child) {
     border-bottom: 1px solid #ddd;
+  }
+  & div:hover {
+    cursor: default;
   }
 `;
