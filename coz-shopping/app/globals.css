@@ -29,3 +29,9 @@ a:visited {
 li {
   list-style: none;
 }
+
+.product_image {
+  width: 100%;
+  height: 80%;
+  border-radius: 12px;
+}

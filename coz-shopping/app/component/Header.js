@@ -82,6 +82,7 @@ const HeadContainer = styled.div`
   position: sticky;
   margin: 20px auto;
   width: 70vw;
+  z-index: 10;
 `;
 
 const LogoContainer = styled.div`
@@ -112,12 +113,13 @@ const DropDown = styled.ul`
   width: 200px;
   border-radius: 12px;
   position: absolute;
-  transform: translate(-65%, 65%);
+  transform: translate(-40%, 70%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-shadow: 5px 9px 25px 0px rgb(0 0 0 / 12%);
+  background-color: #fff;
 `;
 
 const List = styled.li`
