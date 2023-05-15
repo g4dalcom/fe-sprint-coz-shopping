@@ -21,18 +21,32 @@ export default function Bookmark() {
     setOpenModal(!openModal);
   };
 
+  {
+    /* 북마크 목록 불러오기 */
+  }
   useEffect(() => {
     dispatch(bookmarkAction.getBookmarks());
   }, [dispatch]);
 
+  {
+    /* 모든 상품 불러오기 */
+  }
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
+  {
+    /* 필터링 조건 저장(All(=""), Product, Category, Exhibition, Brand 중 선택된 것) */
+  }
   const filterValueHandler = (e) => {
     setFileterValue(e.target.value);
   };
 
+  {
+    /* @marked 북마크된 상품의 id 목록
+      @products 모든 상품 중 북마크 목록에 있는 id와 일치한 상품이면서 filterValue(필터링 조건)와 일치하는 상품
+  */
+  }
   const marked = useSelector((state) => state.bookmark.bookmarks);
   const products = useSelector((state) => state.product.products)
     .filter((e) => marked.includes(e.id))
