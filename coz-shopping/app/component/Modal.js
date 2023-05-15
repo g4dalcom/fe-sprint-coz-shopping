@@ -2,8 +2,20 @@ import styled from "styled-components";
 import Image from "next/image";
 import vector from "../../public/vector.svg";
 import bookmarkOff from "../../public/bookmark-off.svg";
+import bookmarkOn from "../../public/bookmark-on.svg";
+import { bookmarkAction } from "../redux/bookmark";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Modal({ openModal, openModalHandler, product }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(bookmarkAction.getBookmarks());
+  }, [dispatch]);
+
+  const marked = useSelector((state) => state.bookmark.bookmarks);
+
   return (
     <>
       {/* 상품 클릭해서 띄운 모달창 */}
@@ -33,12 +45,13 @@ export default function Modal({ openModal, openModalHandler, product }) {
 
             {/* 북마크 버튼 및 상품명 */}
             <Image
-              src={bookmarkOff}
+              src={marked.includes(product.id) ? bookmarkOn : bookmarkOff}
               width={24}
               height={24}
               alt="bookmark button"
-              onClick={(e) => {
-                e.stopPropagation(), console.log("clicked!!");
+              onClick={(event) => {
+                event.stopPropagation();
+                dispatch(bookmarkAction.marked(product.id));
               }}
             />
             <ModalTitle>

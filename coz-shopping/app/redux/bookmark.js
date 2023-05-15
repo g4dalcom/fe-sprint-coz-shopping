@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bookmarks: [],
+  bookmarks: JSON.parse(localStorage.getItem("coz-bookmark")) || [],
 };
 
 export const bookmarkSlice = createSlice({
@@ -19,6 +19,7 @@ export const bookmarkSlice = createSlice({
         state.bookmarks = [...state.bookmarks, action.payload];
       }
       console.log("redux bookmarks = ", state.bookmarks);
+      localStorage.setItem("coz-bookmark", JSON.stringify(state.bookmarks));
     },
   },
 });

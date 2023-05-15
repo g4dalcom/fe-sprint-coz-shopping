@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "./redux/product";
+import { getAllProducts } from "./redux/product";
 import styled from "styled-components";
 import Modal from "./component/Modal";
 import ProductList from "./component/ProductList";
@@ -14,7 +14,7 @@ export default function Home() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getAllProducts());
   }, [dispatch]);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Home() {
           <ListTitle>상품 리스트</ListTitle>
           <ProductLists>
             <ProductList
-              products={products}
+              products={products.slice(0, 4)}
               setProduct={setProduct}
               openModal={openModal}
               setOpenModal={setOpenModal}
@@ -52,7 +52,7 @@ export default function Home() {
           <ListTitle>북마크 리스트</ListTitle>
           <ProductLists>
             <ProductList
-              products={marked}
+              products={marked.slice(0, 4)}
               setProduct={setProduct}
               openModal={openModal}
               setOpenModal={setOpenModal}
