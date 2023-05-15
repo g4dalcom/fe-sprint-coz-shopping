@@ -48,7 +48,10 @@ export default function Bookmark() {
         product={product}
       />
       <S.MainContainer>
-        <Filtering filterValueHandler={filterValueHandler} />
+        <Filtering
+          filterValueHandler={filterValueHandler}
+          filterValue={filterValue}
+        />
         <P.ProductContainer>
           <P.OVProductList>
             <ProductList

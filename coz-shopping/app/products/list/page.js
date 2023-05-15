@@ -46,7 +46,10 @@ export default function ProductsList() {
         product={product}
       />
       <S.MainContainer>
-        <Filtering filterValueHandler={filterValueHandler} />
+        <Filtering
+          filterValueHandler={filterValueHandler}
+          filterValue={filterValue}
+        />
 
         {/* 상품 리스트 */}
         <ProductContainer>

@@ -6,20 +6,19 @@ import Category from "../../public/category.svg";
 import Exhibition from "../../public/exhibition.svg";
 import Brand from "../../public/brand.svg";
 
-export default function Filtering({ filterValueHandler }) {
+export default function Filtering({ filterValueHandler, filterValue }) {
   return (
     <>
       <FilterContainer>
         <label>
           <Filter>
             <Image src={All} width={82} height={110} alt="no filtering" />
-            <FilterName>전체</FilterName>
+            <FilterName checked={filterValue === ""}>전체</FilterName>
             <input
-              onChange={filterValueHandler}
+              onClick={filterValueHandler}
               type="radio"
               value=""
               name="filter"
-              defaultChecked
             />
           </Filter>
         </label>
@@ -27,9 +26,9 @@ export default function Filtering({ filterValueHandler }) {
         <label>
           <Filter>
             <Image src={Product} width={82} height={110} alt="only product" />
-            <FilterName>상품</FilterName>
+            <FilterName checked={filterValue === "Product"}>상품</FilterName>
             <input
-              onChange={filterValueHandler}
+              onClick={filterValueHandler}
               type="radio"
               value="Product"
               name="filter"
@@ -40,9 +39,11 @@ export default function Filtering({ filterValueHandler }) {
         <label>
           <Filter>
             <Image src={Category} width={82} height={110} alt="only category" />
-            <FilterName>카테고리</FilterName>
+            <FilterName checked={filterValue === "Category"}>
+              카테고리
+            </FilterName>
             <input
-              onChange={filterValueHandler}
+              onClick={filterValueHandler}
               type="radio"
               value="Category"
               name="filter"
@@ -58,9 +59,11 @@ export default function Filtering({ filterValueHandler }) {
               height={110}
               alt="only exhibition"
             />
-            <FilterName>기획전</FilterName>
+            <FilterName checked={filterValue === "Exhibition"}>
+              기획전
+            </FilterName>
             <input
-              onChange={filterValueHandler}
+              onClick={filterValueHandler}
               type="radio"
               value="Exhibition"
               name="filter"
@@ -71,9 +74,9 @@ export default function Filtering({ filterValueHandler }) {
         <label>
           <Filter>
             <Image src={Brand} width={82} height={110} alt="only brand" />
-            <FilterName>브랜드</FilterName>
+            <FilterName checked={filterValue === "Brand"}>브랜드</FilterName>
             <input
-              onChange={filterValueHandler}
+              onClick={filterValueHandler}
               type="radio"
               value="Brand"
               name="filter"
@@ -115,4 +118,6 @@ const FilterName = styled.div`
   font-size: 30px;
   font-weight: 600;
   border-radius: 50px;
+  text-decoration: ${(props) => (props.checked ? "underline" : "none")};
+  color: ${(props) => (props.checked ? "green" : "none")};
 `;
