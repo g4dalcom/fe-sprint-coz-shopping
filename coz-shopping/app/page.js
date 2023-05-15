@@ -33,12 +33,17 @@ export default function Home() {
         product={product}
       />
       <MainContainer>
-        <ProductList
-          products={products}
-          setProduct={setProduct}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
+        <ListContainer>
+          <ListTitle>상품 리스트</ListTitle>
+          <ProductLists>
+            <ProductList
+              products={products}
+              setProduct={setProduct}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          </ProductLists>
+        </ListContainer>
         <ListContainer>
           <ListTitle>북마크 리스트</ListTitle>
           <ProductLists>

@@ -1,31 +1,28 @@
 "use client";
 
 import styled from "styled-components";
-import {
-  MainContainer,
-  ProductLists,
-  CozProduct,
-  CozTitle,
-  CozFollower,
-  Follower,
-  CozDiscount,
-  CozPrice,
-  CozSubTitle,
-} from "@/app/page";
+import * as S from "@/app/page";
 import Image from "next/image";
 import All from "../../../public/all.svg";
 import Product from "../../../public/product.svg";
 import Category from "../../../public/category.svg";
 import Exhibition from "../../../public/exhibition.svg";
 import Brand from "../../../public/brand.svg";
-import bookmarkOff from "../../../public/bookmark-off.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getAllProducts } from "@/app/redux/product";
+import ProductList from "@/app/component/ProductList";
+import Modal from "@/app/component/Modal";
 
 export default function ProductsList() {
   const dispatch = useDispatch();
   const [filterValue, setFileterValue] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [product, setProduct] = useState({});
+
+  const openModalHandler = () => {
+    setOpenModal(!openModal);
+  };
 
   const filterValueHandler = (e) => {
     setFileterValue(e.target.value);
@@ -41,7 +38,12 @@ export default function ProductsList() {
 
   return (
     <>
-      <MainContainer>
+      <Modal
+        openModal={openModal}
+        openModalHandler={openModalHandler}
+        product={product}
+      />
+      <S.MainContainer>
         <FilterContainer>
           <label>
             <Filter>
@@ -115,110 +117,19 @@ export default function ProductsList() {
             </Filter>
           </label>
         </FilterContainer>
+
+        {/* 상품 리스트 */}
         <ProductContainer>
           <OVProductList>
-            {products.map((e) => (
-              <CozProduct key={e.id}>
-                {(() => {
-                  switch (e.type) {
-                    case "Category":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="category image"
-                            className="product_image"
-                          />
-                          <Image
-                            src={bookmarkOff}
-                            width={24}
-                            height={24}
-                            alt="bookmark button"
-                          />
-                          <CozTitle>#{e.title}</CozTitle>
-                        </>
-                      );
-
-                    case "Brand":
-                      return (
-                        <>
-                          <Image
-                            src={e.brand_image_url}
-                            width={260}
-                            height={200}
-                            alt="brand image"
-                            className="product_image"
-                          />
-                          <Image
-                            src={bookmarkOff}
-                            width={24}
-                            height={24}
-                            alt="bookmark button"
-                          />
-                          <CozTitle>{e.brand_name}</CozTitle>
-                          <CozFollower>관심고객수</CozFollower>
-                          <Follower>
-                            {[e.follower]
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                          </Follower>
-                        </>
-                      );
-                    case "Product":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="product image"
-                            className="product_image"
-                          />
-                          <Image
-                            src={bookmarkOff}
-                            width={24}
-                            height={24}
-                            alt="bookmark button"
-                          />
-                          <CozTitle>{e.title}</CozTitle>
-                          <CozDiscount>{e.discountPercentage}%</CozDiscount>
-                          <CozPrice>
-                            {[e.price]
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                            원
-                          </CozPrice>
-                        </>
-                      );
-                    case "Exhibition":
-                      return (
-                        <>
-                          <Image
-                            src={e.image_url}
-                            width={260}
-                            height={200}
-                            alt="exhibition image"
-                            className="product_image"
-                          />
-                          <Image
-                            src={bookmarkOff}
-                            width={24}
-                            height={24}
-                            alt="bookmark button"
-                          />
-                          <CozTitle>{e.title}</CozTitle>
-                          <CozSubTitle>{e.sub_title}</CozSubTitle>
-                        </>
-                      );
-                  }
-                })()}
-              </CozProduct>
-            ))}
+            <ProductList
+              products={products}
+              setProduct={setProduct}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
           </OVProductList>
         </ProductContainer>
-      </MainContainer>
+      </S.MainContainer>
     </>
   );
 }
@@ -266,7 +177,7 @@ const FilterName = styled.div`
   border-radius: 50px;
 `;
 
-const OVProductList = styled(ProductLists)`
+const OVProductList = styled(S.ProductLists)`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5px;

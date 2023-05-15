@@ -29,6 +29,7 @@ export default Loading;
 const LoadingContainer = styled.div`
   width: 70vw;
   height: 70vh;
+  position: relative;
 `;
 
 const PacmanTop = keyframes`
@@ -73,6 +74,11 @@ const Pellets = keyframes`
 `;
 
 const PacmanLoading = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   &,
   & > div {
     position: relative;
