@@ -6,9 +6,11 @@ import bookmarkOff from "../../public/bookmark-off.svg";
 export default function Modal({ openModal, openModalHandler, product }) {
   return (
     <>
+      {/* 상품 클릭해서 띄운 모달창 */}
       {openModal && (
         <ModalBackdrop onClick={openModalHandler}>
           <ModalContainer>
+            {/* X(닫기) 버튼 */}
             <Image
               onClick={openModalHandler}
               src={vector}
@@ -16,6 +18,8 @@ export default function Modal({ openModal, openModalHandler, product }) {
               height={24}
               alt="close button"
             />
+
+            {/* 상품 이미지 */}
             <ModalView>
               <ModalImage
                 src={
@@ -26,11 +30,16 @@ export default function Modal({ openModal, openModalHandler, product }) {
                 alt="product image"
               />
             </ModalView>
+
+            {/* 북마크 버튼 및 상품명 */}
             <Image
               src={bookmarkOff}
               width={24}
               height={24}
               alt="bookmark button"
+              onClick={(e) => {
+                e.stopPropagation(), console.log("clicked!!");
+              }}
             />
             <ModalTitle>
               {product.type === "Brand" ? product.brand_name : product.title}
@@ -50,7 +59,6 @@ const ModalBackdrop = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* border-radius: 10px; */
   z-index: 10;
 `;
 

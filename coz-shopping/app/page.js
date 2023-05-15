@@ -6,20 +6,24 @@ import { getProducts } from "./redux/product";
 import styled from "styled-components";
 import Modal from "./component/Modal";
 import ProductList from "./component/ProductList";
+import { bookmarkAction } from "./redux/bookmark";
 
 export default function Home() {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [product, setProduct] = useState({});
 
-  console.log("product = ", product);
-
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(bookmarkAction.getBookmarks());
+  }, [dispatch]);
+
   const products = useSelector((state) => state.product.products);
-  console.log(products);
+  const bookmark = useSelector((state) => state.bookmark.bookmarks);
+  const marked = products.filter((e) => bookmark.includes(e.id));
 
   const openModalHandler = () => {
     setOpenModal(!openModal);
@@ -47,9 +51,12 @@ export default function Home() {
         <ListContainer>
           <ListTitle>북마크 리스트</ListTitle>
           <ProductLists>
-            {products.map((e) => (
-              <CozProduct key={e.id}>{e.type}</CozProduct>
-            ))}
+            <ProductList
+              products={marked}
+              setProduct={setProduct}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
           </ProductLists>
         </ListContainer>
       </MainContainer>
@@ -63,8 +70,8 @@ export const MainContainer = styled.div`
   justify-content: start;
   align-items: center;
   width: 70vw;
-  height: 70vh;
-  margin-top: 20px;
+  height: 80vh;
+  padding-top: 20px;
   overflow: scroll;
 
   &::-webkit-scrollbar {

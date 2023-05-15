@@ -1,6 +1,10 @@
 import Image from "next/image";
 import * as S from "../page";
 import bookmarkOff from "../../public/bookmark-off.svg";
+import bookmarkOn from "../../public/bookmark-on.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { bookmarkAction } from "../redux/bookmark";
 
 export default function ProductList({
   products,
@@ -8,6 +12,14 @@ export default function ProductList({
   openModal,
   setOpenModal,
 }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(bookmarkAction.getBookmarks);
+  }, [dispatch]);
+
+  const marked = useSelector((state) => state.bookmark.bookmarks);
+
   return (
     <>
       {products.map((e) => (
@@ -31,10 +43,14 @@ export default function ProductList({
                       className="product_image"
                     />
                     <Image
-                      src={bookmarkOff}
+                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
                       width={24}
                       height={24}
                       alt="bookmark button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(bookmarkAction.marked(e.id));
+                      }}
                     />
                     <S.CozTitle>#{e.title}</S.CozTitle>
                   </>
@@ -51,10 +67,14 @@ export default function ProductList({
                       className="product_image"
                     />
                     <Image
-                      src={bookmarkOff}
+                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
                       width={24}
                       height={24}
                       alt="bookmark button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(bookmarkAction.marked(e.id));
+                      }}
                     />
                     <S.CozTitle>{e.brand_name}</S.CozTitle>
                     <S.CozFollower>관심고객수</S.CozFollower>
@@ -76,10 +96,14 @@ export default function ProductList({
                       className="product_image"
                     />
                     <Image
-                      src={bookmarkOff}
+                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
                       width={24}
                       height={24}
                       alt="bookmark button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(bookmarkAction.marked(e.id));
+                      }}
                     />
                     <S.CozTitle>{e.title}</S.CozTitle>
                     <S.CozDiscount>{e.discountPercentage}%</S.CozDiscount>
@@ -102,10 +126,14 @@ export default function ProductList({
                       className="product_image"
                     />
                     <Image
-                      src={bookmarkOff}
+                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
                       width={24}
                       height={24}
                       alt="bookmark button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(bookmarkAction.marked(e.id));
+                      }}
                     />
                     <S.CozTitle>{e.title}</S.CozTitle>
                     <S.CozSubTitle>{e.sub_title}</S.CozSubTitle>

@@ -84,10 +84,12 @@ const HeadContainer = styled.div`
   height: 5vh;
   position: sticky;
   top: 0;
-  margin: 20px auto;
+  margin: 20px auto 0;
   width: 70vw;
   z-index: 10;
   background-color: white;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
 `;
 
 const LogoContainer = styled.div`

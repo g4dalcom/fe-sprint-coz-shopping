@@ -19,7 +19,6 @@ export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
   const res = await axios.get(
     "http://cozshopping.codestates-seb.link/api/v1/products"
   );
-
   const data = await res.data;
 
   return data;
