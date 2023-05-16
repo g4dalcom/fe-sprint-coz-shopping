@@ -51,7 +51,6 @@ export default function Home() {
     /* 북마킹 */
   }
   const productClickHandler = (e) => {
-    console.log("eee = ", e);
     dispatch(bookmarkAction.marked(e.id));
     dispatch(notificationAction.enque_notification(getMessage(e))),
       setTimeout(() => dispatch(notificationAction.deque_notification()), 3000);
