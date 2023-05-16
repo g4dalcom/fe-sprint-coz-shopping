@@ -3,13 +3,37 @@ import Image from "next/image";
 import vector from "../../public/vector.svg";
 import bookmarkOff from "../../public/bookmark-off.svg";
 import bookmarkOn from "../../public/bookmark-on.svg";
-import { bookmarkAction } from "../redux/bookmark";
 import { useDispatch, useSelector } from "react-redux";
+import { bookmarkAction } from "../redux/bookmark";
+import { notificationAction } from "../redux/notification";
 
 export default function Modal({ openModal, openModalHandler, product }) {
   const dispatch = useDispatch();
-
   const marked = useSelector((state) => state.bookmark.bookmarks);
+
+  {
+    /* 상품 상태에 따른 북마크 알림 메시지 */
+  }
+  const getMessage = (e) => {
+    let title = e.type === "Brand" ? e.brand_name : e.title;
+    console.log("title = ", title);
+    let message = "";
+
+    if (marked.includes(e.id)) message = `북마크에서 ${title} 삭제!`;
+    else message = `북마크에 ${title} 추가!`;
+
+    return message;
+  };
+
+  {
+    /* 북마킹 */
+  }
+  const productClickHandler = (e) => {
+    console.log("eee = ", e);
+    dispatch(bookmarkAction.marked(e.id));
+    dispatch(notificationAction.enque_notification(getMessage(e))),
+      setTimeout(() => dispatch(notificationAction.deque_notification()), 3000);
+  };
 
   return (
     <>
@@ -46,7 +70,7 @@ export default function Modal({ openModal, openModalHandler, product }) {
               alt="bookmark button"
               onClick={(event) => {
                 event.stopPropagation();
-                dispatch(bookmarkAction.marked(product.id));
+                productClickHandler(product);
               }}
             />
             <ModalTitle>

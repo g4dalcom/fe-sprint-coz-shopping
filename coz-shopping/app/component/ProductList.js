@@ -14,6 +14,9 @@ export default function ProductList({
 }) {
   const dispatch = useDispatch();
 
+  {
+    /* 상품 상태에 따른 북마크 알림 메시지 */
+  }
   const getMessage = (e) => {
     let title = e.type === "Brand" ? e.brand_name : e.title;
     console.log("title = ", title);
@@ -25,10 +28,13 @@ export default function ProductList({
     return message;
   };
 
+  {
+    /* 북마킹 */
+  }
   const productClickHandler = (e) => {
     dispatch(bookmarkAction.marked(e.id));
     dispatch(notificationAction.enque_notification(getMessage(e))),
-      setTimeout(() => dispatch(notificationAction.deque_notification()), 5000);
+      setTimeout(() => dispatch(notificationAction.deque_notification()), 3000);
   };
 
   {

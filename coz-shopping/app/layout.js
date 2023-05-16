@@ -5,6 +5,7 @@ import Header from "./component/Header";
 import Footer from "./component/Footer";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Toast from "./component/Toast";
 
 export const metadata = {
   title: "COZ Shopping",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <body>
           <Header />
           {children}
+          <Toast />
           <Footer />
         </body>
       </html>

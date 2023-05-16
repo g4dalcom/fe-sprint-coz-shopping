@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Modal from "./component/Modal";
 import ProductList from "./component/ProductList";
 import { bookmarkAction } from "./redux/bookmark";
+import { notificationAction } from "./redux/notification";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -32,12 +33,37 @@ export default function Home() {
     setOpenModal(!openModal);
   };
 
+  {
+    /* 상품 상태에 따른 북마크 알림 메시지 */
+  }
+  const getMessage = (e) => {
+    let title = e.type === "Brand" ? e.brand_name : e.title;
+    console.log("title = ", title);
+    let message = "";
+
+    if (marked.includes(e.id)) message = `북마크에서 ${title} 삭제!`;
+    else message = `북마크에 ${title} 추가!`;
+
+    return message;
+  };
+
+  {
+    /* 북마킹 */
+  }
+  const productClickHandler = (e) => {
+    console.log("eee = ", e);
+    dispatch(bookmarkAction.marked(e.id));
+    dispatch(notificationAction.enque_notification(getMessage(e))),
+      setTimeout(() => dispatch(notificationAction.deque_notification()), 3000);
+  };
+
   return (
     <>
       <Modal
         openModal={openModal}
         openModalHandler={openModalHandler}
         product={product}
+        productClickHandler={productClickHandler}
       />
       <MainContainer>
         <ListContainer>
