@@ -1,12 +1,10 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Filtering from "../component/Filtering";
 import * as S from "@/app/page";
 import * as P from "../products/list/page";
-import { useState, useEffect } from "react";
-import { bookmarkAction } from "../redux/bookmark";
-import { getAllProducts } from "../redux/product";
+import { useState } from "react";
 import ProductList from "../component/ProductList";
 import Modal from "@/app/component/Modal";
 
@@ -15,25 +13,9 @@ export default function Bookmark() {
   const [openModal, setOpenModal] = useState(false); // 모달창 상태
   const [product, setProduct] = useState({}); // 선택된 상품(선택시 모달창으로 띄우기 위함)
 
-  const dispatch = useDispatch();
-
   const openModalHandler = () => {
     setOpenModal(!openModal);
   };
-
-  {
-    /* 북마크 목록 불러오기 */
-  }
-  useEffect(() => {
-    dispatch(bookmarkAction.getBookmarks());
-  }, [dispatch]);
-
-  {
-    /* 모든 상품 불러오기 */
-  }
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch]);
 
   {
     /* 필터링 조건 저장(All(=""), Product, Category, Exhibition, Brand 중 선택된 것) */
@@ -48,7 +30,7 @@ export default function Bookmark() {
   */
   }
   const marked = useSelector((state) => state.bookmark.bookmarks);
-  const products = useSelector((state) => state.product.products)
+  const products = useSelector((state) => state.product.all)
     .filter((e) => marked.includes(e.id))
     .filter((e) => (filterValue === "" ? e : e.type === filterValue));
 

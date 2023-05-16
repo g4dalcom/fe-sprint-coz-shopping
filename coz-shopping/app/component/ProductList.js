@@ -3,8 +3,8 @@ import * as S from "../page";
 import bookmarkOff from "../../public/bookmark-off.svg";
 import bookmarkOn from "../../public/bookmark-on.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { bookmarkAction } from "../redux/bookmark";
+import { notificationAction } from "../redux/notification";
 
 export default function ProductList({
   products,
@@ -14,10 +14,26 @@ export default function ProductList({
 }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(bookmarkAction.getBookmarks);
-  }, [dispatch]);
+  const getMessage = (e) => {
+    let title = e.type === "Brand" ? e.brand_name : e.title;
+    console.log("title = ", title);
+    let message = "";
 
+    if (marked.includes(e.id)) message = `북마크에서 ${title} 삭제!`;
+    else message = `북마크에 ${title} 추가!`;
+
+    return message;
+  };
+
+  const productClickHandler = (e) => {
+    dispatch(bookmarkAction.marked(e.id));
+    dispatch(notificationAction.enque_notification(getMessage(e))),
+      setTimeout(() => dispatch(notificationAction.deque_notification()), 5000);
+  };
+
+  {
+    /* 북마크 목록 가져오기(해당 상품이 목록에 포함되어 있는지에 따라 on/off하기 위함, marked.includes(product.id)) */
+  }
   const marked = useSelector((state) => state.bookmark.bookmarks);
 
   return (
@@ -49,7 +65,7 @@ export default function ProductList({
                       alt="bookmark button"
                       onClick={(event) => {
                         event.stopPropagation();
-                        dispatch(bookmarkAction.marked(e.id));
+                        productClickHandler(e);
                       }}
                     />
                     <S.CozTitle>#{e.title}</S.CozTitle>
@@ -73,7 +89,7 @@ export default function ProductList({
                       alt="bookmark button"
                       onClick={(event) => {
                         event.stopPropagation();
-                        dispatch(bookmarkAction.marked(e.id));
+                        productClickHandler(e);
                       }}
                     />
                     <S.CozTitle>{e.brand_name}</S.CozTitle>
@@ -102,7 +118,7 @@ export default function ProductList({
                       alt="bookmark button"
                       onClick={(event) => {
                         event.stopPropagation();
-                        dispatch(bookmarkAction.marked(e.id));
+                        productClickHandler(e);
                       }}
                     />
                     <S.CozTitle>{e.title}</S.CozTitle>
@@ -132,7 +148,7 @@ export default function ProductList({
                       alt="bookmark button"
                       onClick={(event) => {
                         event.stopPropagation();
-                        dispatch(bookmarkAction.marked(e.id));
+                        productClickHandler(e);
                       }}
                     />
                     <S.CozTitle>{e.title}</S.CozTitle>

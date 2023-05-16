@@ -1,9 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bookmarks: JSON.parse(localStorage.getItem("coz-bookmark")) || [],
+  bookmarks:
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("coz-bookmark"))
+      : [],
 };
 
+{
+  /* @getBookmarks 로컬스토리지에서 북마크 된 상품 id 배열 가져오기
+
+    QQQQQQQQQQQQQQQQQQQQ
+    - 사이드 이펙트가 발생하는 부분인지 궁금.. 외부에서 조건에 따라 addBookmark, removeBookmark로 디스패치 하는 게 나은 지 궁금!
+    @marked 북마크된 상품이면 북마크 배열에서 제거하고, 새로운 상품이면 북마크 배열에 추가
+*/
+}
 export const bookmarkSlice = createSlice({
   name: "bookmark",
   initialState,
@@ -18,7 +29,6 @@ export const bookmarkSlice = createSlice({
       } else {
         state.bookmarks = [...state.bookmarks, action.payload];
       }
-      console.log("redux bookmarks = ", state.bookmarks);
       localStorage.setItem("coz-bookmark", JSON.stringify(state.bookmarks));
     },
   },

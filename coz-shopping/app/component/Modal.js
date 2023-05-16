@@ -4,15 +4,10 @@ import vector from "../../public/vector.svg";
 import bookmarkOff from "../../public/bookmark-off.svg";
 import bookmarkOn from "../../public/bookmark-on.svg";
 import { bookmarkAction } from "../redux/bookmark";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Modal({ openModal, openModalHandler, product }) {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(bookmarkAction.getBookmarks());
-  }, [dispatch]);
 
   const marked = useSelector((state) => state.bookmark.bookmarks);
 

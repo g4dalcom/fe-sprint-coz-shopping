@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "./redux/product";
+import { getAllProducts, getProducts } from "./redux/product";
 import styled from "styled-components";
 import Modal from "./component/Modal";
 import ProductList from "./component/ProductList";
@@ -15,15 +15,18 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
+    dispatch(getProducts());
     dispatch(bookmarkAction.getBookmarks());
   }, [dispatch]);
 
+  console.log(
+    "state = ",
+    useSelector((state) => state)
+  );
   const products = useSelector((state) => state.product.products);
+  const allProducts = useSelector((state) => state.product.all);
   const bookmark = useSelector((state) => state.bookmark.bookmarks);
-  const marked = products.filter((e) => bookmark.includes(e.id));
+  const marked = allProducts.filter((e) => bookmark.includes(e.id));
 
   const openModalHandler = () => {
     setOpenModal(!openModal);
@@ -41,7 +44,7 @@ export default function Home() {
           <ListTitle>상품 리스트</ListTitle>
           <ProductLists>
             <ProductList
-              products={products.slice(0, 4)}
+              products={products}
               setProduct={setProduct}
               openModal={openModal}
               setOpenModal={setOpenModal}
