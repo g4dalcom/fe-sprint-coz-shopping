@@ -100,10 +100,22 @@ export const MainContainer = styled.div`
   width: 70vw;
   height: 80vh;
   padding-top: 20px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    display: none;
+    /* display: none; */
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background: #217af4;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1);
   }
 `;
 

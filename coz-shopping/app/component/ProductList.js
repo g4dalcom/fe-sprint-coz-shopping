@@ -2,9 +2,11 @@ import Image from "next/image";
 import * as S from "../page";
 import bookmarkOff from "../../public/bookmark-off.svg";
 import bookmarkOn from "../../public/bookmark-on.svg";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bookmarkAction } from "../redux/bookmark";
 import { notificationAction } from "../redux/notification";
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 
 export default function ProductList({
   products,
@@ -13,6 +15,23 @@ export default function ProductList({
   setOpenModal,
 }) {
   const dispatch = useDispatch();
+  const [dataLength, setDataLength] = useState(4); // 무한 스크롤시 가져올 데이터의 길이
+  const [observe, setObserve] = useState(false); // 무한 스크롤을 위한 감시 대상이 감지되었는지 여부
+
+  console.log("상품 목록 = ", products.slice(0, dataLength));
+
+  {
+    /* 무한 스크롤 기능 */
+  }
+  useEffect(() => {
+    setDataLength(dataLength + 8);
+    setObserve(false);
+  }, [observe]);
+
+  const setObservationTarget = useIntersectionObserver(() => {
+    setObserve(true);
+    console.log("감지됨");
+  });
 
   {
     /* 상품 상태에 따른 북마크 알림 메시지 */
@@ -44,7 +63,7 @@ export default function ProductList({
 
   return (
     <>
-      {products.map((e) => (
+      {products.slice(0, dataLength).map((e) => (
         <S.CozProduct
           key={e.id}
           onClick={() => {
@@ -165,6 +184,7 @@ export default function ProductList({
           })()}
         </S.CozProduct>
       ))}
+      <div ref={setObservationTarget} style={{ paddingTop: "10px" }} />
     </>
   );
 }
