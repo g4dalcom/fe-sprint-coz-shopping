@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LOCAL_STORAGE_BOOKMARK } from "../shared/Enum";
 
 const initialState = {
   bookmarks:
     typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("coz-bookmark"))
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_BOOKMARK))
       : [],
 };
 
@@ -29,7 +30,10 @@ export const bookmarkSlice = createSlice({
       } else {
         state.bookmarks = [...state.bookmarks, action.payload];
       }
-      localStorage.setItem("coz-bookmark", JSON.stringify(state.bookmarks));
+      localStorage.setItem(
+        LOCAL_STORAGE_BOOKMARK,
+        JSON.stringify(state.bookmarks)
+      );
     },
   },
 });

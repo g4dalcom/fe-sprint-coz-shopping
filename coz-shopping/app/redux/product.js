@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_URL } from "../shared/Enum";
 
 const initialState = {
   all: [],
@@ -8,18 +9,14 @@ const initialState = {
 };
 
 export const getProducts = createAsyncThunk("getProducts", async () => {
-  const res = await axios.get(
-    "http://cozshopping.codestates-seb.link/api/v1/products?count=4"
-  );
+  const res = await axios.get(BASE_URL + "?count=4");
   const data = await res.data;
 
   return data;
 });
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
-  const res = await axios.get(
-    "http://cozshopping.codestates-seb.link/api/v1/products"
-  );
+  const res = await axios.get(BASE_URL);
   const data = await res.data;
 
   return data;

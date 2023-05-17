@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { bookmarkAction } from "../redux/bookmark";
 import { notificationAction } from "../redux/notification";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { BRAND, CATEGORY, EXHIBITION, PRODUCT } from "../shared/Enum";
 
 export default function ProductList({
   products,
@@ -37,7 +38,7 @@ export default function ProductList({
     /* 상품 상태에 따른 북마크 알림 메시지 */
   }
   const getMessage = (e) => {
-    let title = e.type === "Brand" ? e.brand_name : e.title;
+    let title = e.type === BRAND ? e.brand_name : e.title;
     console.log("title = ", title);
     let message = "";
 
@@ -73,7 +74,7 @@ export default function ProductList({
         >
           {(() => {
             switch (e.type) {
-              case "Category":
+              case CATEGORY:
                 return (
                   <>
                     <Image
@@ -97,7 +98,7 @@ export default function ProductList({
                   </>
                 );
 
-              case "Brand":
+              case BRAND:
                 return (
                   <>
                     <Image
@@ -126,7 +127,7 @@ export default function ProductList({
                     </S.Follower>
                   </>
                 );
-              case "Product":
+              case PRODUCT:
                 return (
                   <>
                     <Image
@@ -156,7 +157,7 @@ export default function ProductList({
                     </S.CozPrice>
                   </>
                 );
-              case "Exhibition":
+              case EXHIBITION:
                 return (
                   <>
                     <Image

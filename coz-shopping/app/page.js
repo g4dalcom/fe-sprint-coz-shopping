@@ -24,6 +24,7 @@ export default function Home() {
     "state = ",
     useSelector((state) => state)
   );
+
   const products = useSelector((state) => state.product.products);
   const allProducts = useSelector((state) => state.product.all);
   const bookmark = useSelector((state) => state.bookmark.bookmarks);

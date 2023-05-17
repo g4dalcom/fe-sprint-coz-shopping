@@ -5,6 +5,7 @@ import Product from "../../public/product.svg";
 import Category from "../../public/category.svg";
 import Exhibition from "../../public/exhibition.svg";
 import Brand from "../../public/brand.svg";
+import { BRAND, CATEGORY, EXHIBITION, PRODUCT } from "../shared/Enum";
 
 export default function Filtering({ filterValueHandler, filterValue }) {
   return (
@@ -26,11 +27,11 @@ export default function Filtering({ filterValueHandler, filterValue }) {
         <label>
           <Filter>
             <Image src={Product} width={82} height={110} alt="only product" />
-            <FilterName checked={filterValue === "Product"}>상품</FilterName>
+            <FilterName checked={filterValue === PRODUCT}>상품</FilterName>
             <input
               onClick={filterValueHandler}
               type="radio"
-              value="Product"
+              value={PRODUCT}
               name="filter"
             />
           </Filter>
@@ -39,13 +40,11 @@ export default function Filtering({ filterValueHandler, filterValue }) {
         <label>
           <Filter>
             <Image src={Category} width={82} height={110} alt="only category" />
-            <FilterName checked={filterValue === "Category"}>
-              카테고리
-            </FilterName>
+            <FilterName checked={filterValue === CATEGORY}>카테고리</FilterName>
             <input
               onClick={filterValueHandler}
               type="radio"
-              value="Category"
+              value={CATEGORY}
               name="filter"
             />
           </Filter>
@@ -59,13 +58,11 @@ export default function Filtering({ filterValueHandler, filterValue }) {
               height={110}
               alt="only exhibition"
             />
-            <FilterName checked={filterValue === "Exhibition"}>
-              기획전
-            </FilterName>
+            <FilterName checked={filterValue === EXHIBITION}>기획전</FilterName>
             <input
               onClick={filterValueHandler}
               type="radio"
-              value="Exhibition"
+              value={EXHIBITION}
               name="filter"
             />
           </Filter>
@@ -74,11 +71,11 @@ export default function Filtering({ filterValueHandler, filterValue }) {
         <label>
           <Filter>
             <Image src={Brand} width={82} height={110} alt="only brand" />
-            <FilterName checked={filterValue === "Brand"}>브랜드</FilterName>
+            <FilterName checked={filterValue === BRAND}>브랜드</FilterName>
             <input
               onClick={filterValueHandler}
               type="radio"
-              value="Brand"
+              value={BRAND}
               name="filter"
             />
           </Filter>

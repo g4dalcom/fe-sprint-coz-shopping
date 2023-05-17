@@ -11,22 +11,22 @@ import { useState, useEffect, useRef } from "react";
 export default function Header() {
   const router = useRouter();
   const el = useRef();
-  const [openModal, setOpenModal] = useState(false);
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   {
     /* 드롭다운 메뉴 외부를 클릭하면 모달 닫기 */
   }
   useEffect(() => {
-    const clickModalOutside = (e) => {
+    const clickDropdownOutside = (e) => {
       if (!el?.current?.contains(e.target)) {
-        setOpenModal(false);
+        setIsOpenDropdown(false);
       }
     };
 
-    document.addEventListener("mousedown", clickModalOutside);
+    document.addEventListener("mousedown", clickDropdownOutside);
 
     return () => {
-      document.removeEventListener("mousedown", clickModalOutside);
+      document.removeEventListener("mousedown", clickDropdownOutside);
     };
   }, []);
 
@@ -34,7 +34,7 @@ export default function Header() {
     /* 메뉴 아이콘 클릭시 모달창 띄우기 */
   }
   const onClickHandler = () => {
-    setOpenModal(true);
+    setIsOpenDropdown(true);
   };
 
   return (
@@ -50,21 +50,24 @@ export default function Header() {
         <NavContainer>
           <DropDownContainer>
             <Image onClick={onClickHandler} src={burger} alt="nav Button" />
-            {openModal && (
+            {isOpenDropdown && (
               <DropDown id="dropdown" ref={el}>
                 <List>
                   <div>OOO님, 안녕하세요!</div>
                 </List>
                 <List>
                   <Link
-                    onClick={() => setOpenModal(false)}
+                    onClick={() => setIsOpenDropdown(false)}
                     href="/products/list"
                   >
                     🎁상품리스트 페이지
                   </Link>
                 </List>
                 <List>
-                  <Link onClick={() => setOpenModal(false)} href="/bookmark">
+                  <Link
+                    onClick={() => setIsOpenDropdown(false)}
+                    href="/bookmark"
+                  >
                     ⭐북마크 페이지
                   </Link>
                 </List>

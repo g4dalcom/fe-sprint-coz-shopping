@@ -1,7 +1,7 @@
 "use client";
 
 import styled, { keyframes } from "styled-components";
-import Header from "./component/Header";
+import Header from "./component/Header.js";
 import Footer from "./component/Footer.js";
 
 const Loading = () => {
