@@ -1,13 +1,10 @@
 "use client";
 
 import styled, { keyframes } from "styled-components";
-import Header from "./component/Header.js";
-import Footer from "./component/Footer.js";
 
 const Loading = () => {
   return (
     <>
-      <Header />
       <LoadingContainer>
         <PacmanLoading>
           <div></div>
@@ -19,7 +16,6 @@ const Loading = () => {
         </PacmanLoading>
         <div>Loading...</div>
       </LoadingContainer>
-      <Footer />
     </>
   );
 };

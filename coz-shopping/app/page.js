@@ -98,7 +98,7 @@ export const MainContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  width: 70vw;
+  width: 72vw;
   height: 80vh;
   padding-top: 20px;
   overflow-x: hidden;

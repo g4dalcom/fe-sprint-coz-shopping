@@ -31,7 +31,7 @@ export default function Header() {
   }, []);
 
   {
-    /* 메뉴 아이콘 클릭시 모달창 띄우기 */
+    /* 메뉴 아이콘 클릭시 드롭다운 띄우기 */
   }
   const onClickHandler = () => {
     setIsOpenDropdown(true);
