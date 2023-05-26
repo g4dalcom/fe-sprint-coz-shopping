@@ -85,7 +85,7 @@ export default function Filtering({ filterValueHandler, filterValue }) {
   );
 }
 
-const FilterContainer = styled.div`
+export const FilterContainer = styled.div`
   width: 60%;
   height: 20%;
   display: flex;
@@ -93,7 +93,7 @@ const FilterContainer = styled.div`
   align-items: center;
 `;
 
-const Filter = styled.div`
+export const Filter = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,7 +110,7 @@ const Filter = styled.div`
   }
 `;
 
-const FilterName = styled.div`
+export const FilterName = styled.div`
   font-family: Dongle;
   font-size: 30px;
   font-weight: 600;

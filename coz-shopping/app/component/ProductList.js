@@ -1,13 +1,9 @@
 import Image from "next/image";
 import * as S from "../page";
-import bookmarkOff from "../../public/bookmark-off.svg";
-import bookmarkOn from "../../public/bookmark-on.svg";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { bookmarkAction } from "../redux/bookmark";
-import { notificationAction } from "../redux/notification";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { BRAND, CATEGORY, EXHIBITION, PRODUCT } from "../shared/Enum";
+import BookmarkBtn from "./BookmarkBtn";
 
 export default function ProductList({
   products,
@@ -15,7 +11,6 @@ export default function ProductList({
   openModal,
   setOpenModal,
 }) {
-  const dispatch = useDispatch();
   const [dataLength, setDataLength] = useState(4); // 무한 스크롤시 가져올 데이터의 길이
   const [observe, setObserve] = useState(false); // 무한 스크롤을 위한 감시 대상이 감지되었는지 여부
 
@@ -33,34 +28,6 @@ export default function ProductList({
     setObserve(true);
     console.log("감지됨");
   });
-
-  {
-    /* 상품 상태에 따른 북마크 알림 메시지 */
-  }
-  const getMessage = (e) => {
-    let title = e.type === BRAND ? e.brand_name : e.title;
-    console.log("title = ", title);
-    let message = "";
-
-    if (marked.includes(e.id)) message = `북마크에서 ${title} 삭제!`;
-    else message = `북마크에 ${title} 추가!`;
-
-    return message;
-  };
-
-  {
-    /* 북마킹 */
-  }
-  const productClickHandler = (e) => {
-    dispatch(bookmarkAction.marked(e.id));
-    dispatch(notificationAction.enque_notification(getMessage(e))),
-      setTimeout(() => dispatch(notificationAction.deque_notification()), 3000);
-  };
-
-  {
-    /* 북마크 목록 가져오기(해당 상품이 목록에 포함되어 있는지에 따라 on/off하기 위함, marked.includes(product.id)) */
-  }
-  const marked = useSelector((state) => state.bookmark.bookmarks);
 
   return (
     <>
@@ -84,16 +51,7 @@ export default function ProductList({
                       alt="category image"
                       className="product_image"
                     />
-                    <Image
-                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
-                      width={24}
-                      height={24}
-                      alt="bookmark button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        productClickHandler(e);
-                      }}
-                    />
+                    <BookmarkBtn product={e} />
                     <S.CozTitle>#{e.title}</S.CozTitle>
                   </>
                 );
@@ -108,16 +66,7 @@ export default function ProductList({
                       alt="brand image"
                       className="product_image"
                     />
-                    <Image
-                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
-                      width={24}
-                      height={24}
-                      alt="bookmark button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        productClickHandler(e);
-                      }}
-                    />
+                    <BookmarkBtn product={e} />
                     <S.CozTitle>{e.brand_name}</S.CozTitle>
                     <S.CozFollower>관심고객수</S.CozFollower>
                     <S.Follower>
@@ -137,16 +86,7 @@ export default function ProductList({
                       alt="product image"
                       className="product_image"
                     />
-                    <Image
-                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
-                      width={24}
-                      height={24}
-                      alt="bookmark button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        productClickHandler(e);
-                      }}
-                    />
+                    <BookmarkBtn product={e} />
                     <S.CozTitle>{e.title}</S.CozTitle>
                     <S.CozDiscount>{e.discountPercentage}%</S.CozDiscount>
                     <S.CozPrice>
@@ -167,16 +107,7 @@ export default function ProductList({
                       alt="exhibition image"
                       className="product_image"
                     />
-                    <Image
-                      src={marked.includes(e.id) ? bookmarkOn : bookmarkOff}
-                      width={24}
-                      height={24}
-                      alt="bookmark button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        productClickHandler(e);
-                      }}
-                    />
+                    <BookmarkBtn product={e} />
                     <S.CozTitle>{e.title}</S.CozTitle>
                     <S.CozSubTitle>{e.sub_title}</S.CozSubTitle>
                   </>

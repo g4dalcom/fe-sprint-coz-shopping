@@ -2,11 +2,11 @@
 
 import styled, { keyframes } from "styled-components";
 
-const Loading = () => {
+const Loading = ({ backgroundColor, pacmanColor, feedColor }) => {
   return (
     <>
-      <LoadingContainer>
-        <PacmanLoading>
+      <LoadingContainer backgroundColor={backgroundColor}>
+        <PacmanLoading pacmanColor={pacmanColor} feedColor={feedColor}>
           <div></div>
           <div></div>
           <div></div>
@@ -14,7 +14,6 @@ const Loading = () => {
           <div></div>
           <div></div>
         </PacmanLoading>
-        <div>Loading...</div>
       </LoadingContainer>
     </>
   );
@@ -26,6 +25,7 @@ const LoadingContainer = styled.div`
   width: 70vw;
   height: 70vh;
   position: relative;
+  background-color: ${(props) => props.backgroundColor};
 `;
 
 const PacmanTop = keyframes`
@@ -85,14 +85,16 @@ const PacmanLoading = styled.div`
     width: 32px;
     height: 32px;
     font-size: 0;
-    color: #5a49f5;
+    /* color: #5a49f5; */
+    color: ${(props) => props.pacmanColor};
   }
 
   & > div {
     display: inline-block;
     float: none;
-    background-color: #696363;
-    border: 0 solid #5a49f5;
+    /* background-color: #696363; */
+    background-color: ${(props) => props.feedColor};
+    border: 0 solid ${(props) => props.pacmanColor};
   }
 
   & > div:nth-child(1),

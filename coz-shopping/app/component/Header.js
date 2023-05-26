@@ -30,13 +30,6 @@ export default function Header() {
     };
   }, []);
 
-  {
-    /* 메뉴 아이콘 클릭시 드롭다운 띄우기 */
-  }
-  const onClickHandler = () => {
-    setIsOpenDropdown(true);
-  };
-
   return (
     <>
       <HeadContainer>
@@ -49,7 +42,11 @@ export default function Header() {
         {/* 메뉴 아이콘(햄버거) 및 드롭다운 */}
         <NavContainer>
           <DropDownContainer>
-            <Image onClick={onClickHandler} src={burger} alt="nav Button" />
+            <Image
+              onClick={() => setIsOpenDropdown(true)}
+              src={burger}
+              alt="nav Button"
+            />
             {isOpenDropdown && (
               <DropDown id="dropdown" ref={el}>
                 <List>
@@ -111,7 +108,7 @@ const NavContainer = styled.div`
   }
 `;
 
-const DropDownContainer = styled.div`
+export const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,7 +116,7 @@ const DropDownContainer = styled.div`
   position: relative;
 `;
 
-const DropDown = styled.ul`
+export const DropDown = styled.ul`
   width: 200px;
   border-radius: 12px;
   position: absolute;

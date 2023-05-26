@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getProducts } from "./redux/product";
 import styled from "styled-components";
 import Modal from "./component/Modal";
 import ProductList from "./component/ProductList";
@@ -13,17 +12,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [product, setProduct] = useState({});
-
-  useEffect(() => {
-    dispatch(getAllProducts());
-    dispatch(getProducts());
-    dispatch(bookmarkAction.getBookmarks());
-  }, [dispatch]);
-
-  console.log(
-    "state = ",
-    useSelector((state) => state)
-  );
 
   const products = useSelector((state) => state.product.products);
   const allProducts = useSelector((state) => state.product.all);
@@ -98,17 +86,17 @@ export const MainContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  width: 72vw;
+  width: 70vw;
   height: 80vh;
   padding-top: 20px;
   overflow-x: hidden;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    /* display: none; */
-    width: 10px;
+    display: none;
+    /* width: 10px; */
   }
-
+  /* 
   &::-webkit-scrollbar-thumb {
     height: 10%;
     background: #217af4;
@@ -117,7 +105,7 @@ export const MainContainer = styled.div`
 
   &::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, 0.1);
-  }
+  }  */
 `;
 
 export const ListContainer = styled.div`
