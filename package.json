@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "chromatic": "^6.17.4"
+  },
+  "scripts": {
+    "chromatic": "npx chromatic --project-token=chpt_c97b8712ee5ac43",
+    "build-storybook": "build-storybook"
+  }
+}
